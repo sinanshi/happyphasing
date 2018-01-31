@@ -1172,9 +1172,13 @@ performBWPS <- function(obs_individual, ref_panel, theta, lambda, block_length, 
       # calculate the semi-collapsed forward probabilities at the first site of the genomic block
       semi_collapsed_fwd_prob[[1]] <- list(total = collapseFwdProb_Diplo_SemiRed_Block(uncollapsed_fwd_prob_lbndry, N_panel, collapsed_info))
       
-      if (min(collapsed_fwd_prob[[1]]$total) < 1e-09 || min(semi_collapsed_fwd_prob[[1]]$total) < 1e-09) {
-        collapsed_fwd_prob[[1]]$total <- collapsed_fwd_prob[[1]]$total * 1e+09
-        semi_collapsed_fwd_prob[[1]]$total <- semi_collapsed_fwd_prob[[1]]$total * 1e+09
+      if (min(collapsed_fwd_prob[[1]]$total) < 1e-15 || min(semi_collapsed_fwd_prob[[1]]$total) < 1e-15) {
+        collapsed_fwd_prob[[1]]$total <- collapsed_fwd_prob[[1]]$total * 1e+15
+        semi_collapsed_fwd_prob[[1]]$total <- semi_collapsed_fwd_prob[[1]]$total * 1e+15
+      }
+      if (max(collapsed_fwd_prob[[1]]$total) > 1e+15 || max(semi_collapsed_fwd_prob[[1]]$total) > 1e+15) {
+        collapsed_fwd_prob[[1]]$total <- collapsed_fwd_prob[[1]]$total * 1e-15
+        semi_collapsed_fwd_prob[[1]]$total <- semi_collapsed_fwd_prob[[1]]$total * 1e-15
       }
       
       if (L_block > 1) {
@@ -1184,14 +1188,23 @@ performBWPS <- function(obs_individual, ref_panel, theta, lambda, block_length, 
         collapsed_emn_prob <- calculateEmnProb_Diplo(obs_block[2], uncollapsed_ref_block[, 2], collapsed_ref_block[, 2], emn_prob_tab)
         semi_collapsed_fwd_prob[[2]] <- initialiseFwdProb_Diplo_SemiRed_Block(semi_collapsed_fwd_prob[[1]]$total, collapsed_emn_prob, theta_block[1], N_panel, N_block)
         
-        if (min(collapsed_fwd_prob[[2]]$nr_nr) < 1e-09 || min(semi_collapsed_fwd_prob[[2]]$nr_nr) < 1e-09) {
-          collapsed_fwd_prob[[2]]$nr_nr <- collapsed_fwd_prob[[2]]$nr_nr * 1e+09
-          collapsed_fwd_prob[[2]]$nr_r <- collapsed_fwd_prob[[2]]$nr_r * 1e+09
-          collapsed_fwd_prob[[2]]$r_nr <- collapsed_fwd_prob[[2]]$r_nr * 1e+09
-          collapsed_fwd_prob[[2]]$r_r <- collapsed_fwd_prob[[2]]$r_r * 1e+09
-          collapsed_fwd_prob[[2]]$total <- collapsed_fwd_prob[[2]]$total * 1e+09
-          semi_collapsed_fwd_prob[[2]]$nr_nr <- semi_collapsed_fwd_prob[[2]]$nr_nr * 1e+09
-          semi_collapsed_fwd_prob[[2]]$nr_r <- semi_collapsed_fwd_prob[[2]]$nr_r * 1e+09
+        if (min(collapsed_fwd_prob[[2]]$total) < 1e-15 || min(semi_collapsed_fwd_prob[[2]]$total) < 1e-15) {
+          collapsed_fwd_prob[[2]]$nr_nr <- collapsed_fwd_prob[[2]]$nr_nr * 1e+15
+          collapsed_fwd_prob[[2]]$nr_r <- collapsed_fwd_prob[[2]]$nr_r * 1e+15
+          collapsed_fwd_prob[[2]]$r_nr <- collapsed_fwd_prob[[2]]$r_nr * 1e+15
+          collapsed_fwd_prob[[2]]$r_r <- collapsed_fwd_prob[[2]]$r_r * 1e+15
+          collapsed_fwd_prob[[2]]$total <- collapsed_fwd_prob[[2]]$total * 1e+15
+          semi_collapsed_fwd_prob[[2]]$nr_nr <- semi_collapsed_fwd_prob[[2]]$nr_nr * 1e+15
+          semi_collapsed_fwd_prob[[2]]$nr_r <- semi_collapsed_fwd_prob[[2]]$nr_r * 1e+15
+        }
+        if (max(collapsed_fwd_prob[[2]]$total) > 1e+15 || max(semi_collapsed_fwd_prob[[2]]$total) > 1e+15) {
+          collapsed_fwd_prob[[2]]$nr_nr <- collapsed_fwd_prob[[2]]$nr_nr * 1e-15
+          collapsed_fwd_prob[[2]]$nr_r <- collapsed_fwd_prob[[2]]$nr_r * 1e-15
+          collapsed_fwd_prob[[2]]$r_nr <- collapsed_fwd_prob[[2]]$r_nr * 1e-15
+          collapsed_fwd_prob[[2]]$r_r <- collapsed_fwd_prob[[2]]$r_r * 1e-15
+          collapsed_fwd_prob[[2]]$total <- collapsed_fwd_prob[[2]]$total * 1e-15
+          semi_collapsed_fwd_prob[[2]]$nr_nr <- semi_collapsed_fwd_prob[[2]]$nr_nr * 1e-15
+          semi_collapsed_fwd_prob[[2]]$nr_r <- semi_collapsed_fwd_prob[[2]]$nr_r * 1e-15
         }
         
         if (L_block > 2) {
@@ -1202,14 +1215,23 @@ performBWPS <- function(obs_individual, ref_panel, theta, lambda, block_length, 
             collapsed_emn_prob <- calculateEmnProb_Diplo(obs_block[l], uncollapsed_ref_block[, l], collapsed_ref_block[, l], emn_prob_tab)
             semi_collapsed_fwd_prob[[l]] <- updateFwdProb_Diplo_SemiRed_Block(semi_collapsed_fwd_prob[[l - 1]], collapsed_emn_prob, theta_block[l - 1], N_panel, N_block)
             
-            if (min(collapsed_fwd_prob[[l]]$nr_nr) < 1e-09 || min(semi_collapsed_fwd_prob[[l]]$nr_nr) < 1e-09) {
-              collapsed_fwd_prob[[l]]$nr_nr <- collapsed_fwd_prob[[l]]$nr_nr * 1e+09
-              collapsed_fwd_prob[[l]]$nr_r <- collapsed_fwd_prob[[l]]$nr_r * 1e+09
-              collapsed_fwd_prob[[l]]$r_nr <- collapsed_fwd_prob[[l]]$r_nr * 1e+09
-              collapsed_fwd_prob[[l]]$r_r <- collapsed_fwd_prob[[l]]$r_r * 1e+09
-              collapsed_fwd_prob[[l]]$total <- collapsed_fwd_prob[[l]]$total * 1e+09
-              semi_collapsed_fwd_prob[[l]]$nr_nr <- semi_collapsed_fwd_prob[[l]]$nr_nr * 1e+09
-              semi_collapsed_fwd_prob[[l]]$nr_r <- semi_collapsed_fwd_prob[[l]]$nr_r * 1e+09
+            if (min(collapsed_fwd_prob[[l]]$total) < 1e-15 || min(semi_collapsed_fwd_prob[[l]]$total) < 1e-15) {
+              collapsed_fwd_prob[[l]]$nr_nr <- collapsed_fwd_prob[[l]]$nr_nr * 1e+15
+              collapsed_fwd_prob[[l]]$nr_r <- collapsed_fwd_prob[[l]]$nr_r * 1e+15
+              collapsed_fwd_prob[[l]]$r_nr <- collapsed_fwd_prob[[l]]$r_nr * 1e+15
+              collapsed_fwd_prob[[l]]$r_r <- collapsed_fwd_prob[[l]]$r_r * 1e+15
+              collapsed_fwd_prob[[l]]$total <- collapsed_fwd_prob[[l]]$total * 1e+15
+              semi_collapsed_fwd_prob[[l]]$nr_nr <- semi_collapsed_fwd_prob[[l]]$nr_nr * 1e+15
+              semi_collapsed_fwd_prob[[l]]$nr_r <- semi_collapsed_fwd_prob[[l]]$nr_r * 1e+15
+            }
+            if (max(collapsed_fwd_prob[[l]]$total) > 1e+15 || max(semi_collapsed_fwd_prob[[l]]$total) > 1e+15) {
+              collapsed_fwd_prob[[l]]$nr_nr <- collapsed_fwd_prob[[l]]$nr_nr * 1e-15
+              collapsed_fwd_prob[[l]]$nr_r <- collapsed_fwd_prob[[l]]$nr_r * 1e-15
+              collapsed_fwd_prob[[l]]$r_nr <- collapsed_fwd_prob[[l]]$r_nr * 1e-15
+              collapsed_fwd_prob[[l]]$r_r <- collapsed_fwd_prob[[l]]$r_r * 1e-15
+              collapsed_fwd_prob[[l]]$total <- collapsed_fwd_prob[[l]]$total * 1e-15
+              semi_collapsed_fwd_prob[[l]]$nr_nr <- semi_collapsed_fwd_prob[[l]]$nr_nr * 1e-15
+              semi_collapsed_fwd_prob[[l]]$nr_r <- semi_collapsed_fwd_prob[[l]]$nr_r * 1e-15
             }
           }
         }
@@ -1403,8 +1425,11 @@ performBWPS_Approx1 <- function(obs_individual, ref_panel, theta, lambda, block_
       # calculate the full-collapsed forward probabilities at the first site of the genomic block
       collapsed_fwd_prob[[1]] <- list(total = collapseFwdProb_Diplo_FullRed_Block(uncollapsed_fwd_prob_lbndry, collapsed_info))
       
-      if (min(collapsed_fwd_prob[[1]]$total) < 1e-09) {
-        collapsed_fwd_prob[[1]]$total <- collapsed_fwd_prob[[1]]$total * 1e+09
+      if (min(collapsed_fwd_prob[[1]]$total) < 1e-15) {
+        collapsed_fwd_prob[[1]]$total <- collapsed_fwd_prob[[1]]$total * 1e+15
+      }
+      if (max(collapsed_fwd_prob[[1]]$total) > 1e+15) {
+        collapsed_fwd_prob[[1]]$total <- collapsed_fwd_prob[[1]]$total * 1e-15
       }
       
       if (L_block > 1) {
@@ -1412,12 +1437,19 @@ performBWPS_Approx1 <- function(obs_individual, ref_panel, theta, lambda, block_
         collapsed_emn_prob <- calculateEmnProb_Diplo(obs_block[2], collapsed_ref_block[, 2], collapsed_ref_block[, 2], emn_prob_tab)
         collapsed_fwd_prob[[2]] <- initialiseFwdProb_Diplo_FullRed_Block(collapsed_fwd_prob[[1]]$total, collapsed_emn_prob, theta_block[1], N_panel, N_block)
         
-        if (min(collapsed_fwd_prob[[2]]$nr_nr) < 1e-09) {
-          collapsed_fwd_prob[[2]]$nr_nr <- collapsed_fwd_prob[[2]]$nr_nr * 1e+09
-          collapsed_fwd_prob[[2]]$nr_r <- collapsed_fwd_prob[[2]]$nr_r * 1e+09
-          collapsed_fwd_prob[[2]]$r_nr <- collapsed_fwd_prob[[2]]$r_nr * 1e+09
-          collapsed_fwd_prob[[2]]$r_r <- collapsed_fwd_prob[[2]]$r_r * 1e+09
-          collapsed_fwd_prob[[2]]$total <- collapsed_fwd_prob[[2]]$total * 1e+09
+        if (min(collapsed_fwd_prob[[2]]$total) < 1e-15) {
+          collapsed_fwd_prob[[2]]$nr_nr <- collapsed_fwd_prob[[2]]$nr_nr * 1e+15
+          collapsed_fwd_prob[[2]]$nr_r <- collapsed_fwd_prob[[2]]$nr_r * 1e+15
+          collapsed_fwd_prob[[2]]$r_nr <- collapsed_fwd_prob[[2]]$r_nr * 1e+15
+          collapsed_fwd_prob[[2]]$r_r <- collapsed_fwd_prob[[2]]$r_r * 1e+15
+          collapsed_fwd_prob[[2]]$total <- collapsed_fwd_prob[[2]]$total * 1e+15
+        }
+        if (max(collapsed_fwd_prob[[2]]$total) > 1e+15) {
+          collapsed_fwd_prob[[2]]$nr_nr <- collapsed_fwd_prob[[2]]$nr_nr * 1e-15
+          collapsed_fwd_prob[[2]]$nr_r <- collapsed_fwd_prob[[2]]$nr_r * 1e-15
+          collapsed_fwd_prob[[2]]$r_nr <- collapsed_fwd_prob[[2]]$r_nr * 1e-15
+          collapsed_fwd_prob[[2]]$r_r <- collapsed_fwd_prob[[2]]$r_r * 1e-15
+          collapsed_fwd_prob[[2]]$total <- collapsed_fwd_prob[[2]]$total * 1e-15
         }
         
         if (L_block > 2) {
@@ -1426,12 +1458,19 @@ performBWPS_Approx1 <- function(obs_individual, ref_panel, theta, lambda, block_
             collapsed_emn_prob <- calculateEmnProb_Diplo(obs_block[l], collapsed_ref_block[, l], collapsed_ref_block[, l], emn_prob_tab)
             collapsed_fwd_prob[[l]] <- updateFwdProb_Diplo_FullRed_Block(collapsed_fwd_prob[[l - 1]], collapsed_emn_prob, theta_block[l - 1], N_panel, N_block)
             
-            if (min(collapsed_fwd_prob[[l]]$nr_nr) < 1e-09) {
-              collapsed_fwd_prob[[l]]$nr_nr <- collapsed_fwd_prob[[l]]$nr_nr * 1e+09
-              collapsed_fwd_prob[[l]]$nr_r <- collapsed_fwd_prob[[l]]$nr_r * 1e+09
-              collapsed_fwd_prob[[l]]$r_nr <- collapsed_fwd_prob[[l]]$r_nr * 1e+09
-              collapsed_fwd_prob[[l]]$r_r <- collapsed_fwd_prob[[l]]$r_r * 1e+09
-              collapsed_fwd_prob[[l]]$total <- collapsed_fwd_prob[[l]]$total * 1e+09
+            if (min(collapsed_fwd_prob[[l]]$total) < 1e-15) {
+              collapsed_fwd_prob[[l]]$nr_nr <- collapsed_fwd_prob[[l]]$nr_nr * 1e+15
+              collapsed_fwd_prob[[l]]$nr_r <- collapsed_fwd_prob[[l]]$nr_r * 1e+15
+              collapsed_fwd_prob[[l]]$r_nr <- collapsed_fwd_prob[[l]]$r_nr * 1e+15
+              collapsed_fwd_prob[[l]]$r_r <- collapsed_fwd_prob[[l]]$r_r * 1e+15
+              collapsed_fwd_prob[[l]]$total <- collapsed_fwd_prob[[l]]$total * 1e+15
+            }
+            if (max(collapsed_fwd_prob[[l]]$total) > 1e+15) {
+              collapsed_fwd_prob[[l]]$nr_nr <- collapsed_fwd_prob[[l]]$nr_nr * 1e-15
+              collapsed_fwd_prob[[l]]$nr_r <- collapsed_fwd_prob[[l]]$nr_r * 1e-15
+              collapsed_fwd_prob[[l]]$r_nr <- collapsed_fwd_prob[[l]]$r_nr * 1e-15
+              collapsed_fwd_prob[[l]]$r_r <- collapsed_fwd_prob[[l]]$r_r * 1e-15
+              collapsed_fwd_prob[[l]]$total <- collapsed_fwd_prob[[l]]$total * 1e-15
             }
           }
         }
@@ -1610,8 +1649,11 @@ performBWPS_Approx2 <- function(obs_individual, ref_panel, theta, lambda, block_
       # calculate the full-collapsed forward probabilities at the first site of the genomic block
       collapsed_fwd_prob[[1]] <- list(total = collapseFwdProb_Diplo_FullRed_Block(uncollapsed_fwd_prob_lbndry, collapsed_info))
       
-      if (min(collapsed_fwd_prob[[1]]$total) < 1e-09) {
-        collapsed_fwd_prob[[1]]$total <- collapsed_fwd_prob[[1]]$total * 1e+09
+      if (min(collapsed_fwd_prob[[1]]$total) < 1e-15) {
+        collapsed_fwd_prob[[1]]$total <- collapsed_fwd_prob[[1]]$total * 1e+15
+      }
+      if (max(collapsed_fwd_prob[[1]]$total) > 1e+15) {
+        collapsed_fwd_prob[[1]]$total <- collapsed_fwd_prob[[1]]$total * 1e-15
       }
       
       if (L_block > 1) {
@@ -1619,12 +1661,19 @@ performBWPS_Approx2 <- function(obs_individual, ref_panel, theta, lambda, block_
         collapsed_emn_prob <- calculateEmnProb_Diplo(obs_block[2], collapsed_ref_block[, 2], collapsed_ref_block[, 2], emn_prob_tab)
         collapsed_fwd_prob[[2]] <- initialiseFwdProb_Diplo_FullRed_Block(collapsed_fwd_prob[[1]]$total, collapsed_emn_prob, theta_block[1], N_panel, N_block)
         
-        if (min(collapsed_fwd_prob[[2]]$nr_nr) < 1e-09) {
-          collapsed_fwd_prob[[2]]$nr_nr <- collapsed_fwd_prob[[2]]$nr_nr * 1e+09
-          collapsed_fwd_prob[[2]]$nr_r <- collapsed_fwd_prob[[2]]$nr_r * 1e+09
-          collapsed_fwd_prob[[2]]$r_nr <- collapsed_fwd_prob[[2]]$r_nr * 1e+09
-          collapsed_fwd_prob[[2]]$r_r <- collapsed_fwd_prob[[2]]$r_r * 1e+09
-          collapsed_fwd_prob[[2]]$total <- collapsed_fwd_prob[[2]]$total * 1e+09
+        if (min(collapsed_fwd_prob[[2]]$total) < 1e-15) {
+          collapsed_fwd_prob[[2]]$nr_nr <- collapsed_fwd_prob[[2]]$nr_nr * 1e+15
+          collapsed_fwd_prob[[2]]$nr_r <- collapsed_fwd_prob[[2]]$nr_r * 1e+15
+          collapsed_fwd_prob[[2]]$r_nr <- collapsed_fwd_prob[[2]]$r_nr * 1e+15
+          collapsed_fwd_prob[[2]]$r_r <- collapsed_fwd_prob[[2]]$r_r * 1e+15
+          collapsed_fwd_prob[[2]]$total <- collapsed_fwd_prob[[2]]$total * 1e+15
+        }
+        if (max(collapsed_fwd_prob[[2]]$total) > 1e+15) {
+          collapsed_fwd_prob[[2]]$nr_nr <- collapsed_fwd_prob[[2]]$nr_nr * 1e-15
+          collapsed_fwd_prob[[2]]$nr_r <- collapsed_fwd_prob[[2]]$nr_r * 1e-15
+          collapsed_fwd_prob[[2]]$r_nr <- collapsed_fwd_prob[[2]]$r_nr * 1e-15
+          collapsed_fwd_prob[[2]]$r_r <- collapsed_fwd_prob[[2]]$r_r * 1e-15
+          collapsed_fwd_prob[[2]]$total <- collapsed_fwd_prob[[2]]$total * 1e-15
         }
         
         if (L_block > 2) {
@@ -1633,12 +1682,19 @@ performBWPS_Approx2 <- function(obs_individual, ref_panel, theta, lambda, block_
             collapsed_emn_prob <- calculateEmnProb_Diplo(obs_block[l], collapsed_ref_block[, l], collapsed_ref_block[, l], emn_prob_tab)
             collapsed_fwd_prob[[l]] <- updateFwdProb_Diplo_FullRed_Block(collapsed_fwd_prob[[l - 1]], collapsed_emn_prob, theta_block[l - 1], N_panel, N_block)
             
-            if (min(collapsed_fwd_prob[[l]]$nr_nr) < 1e-09) {
-              collapsed_fwd_prob[[l]]$nr_nr <- collapsed_fwd_prob[[l]]$nr_nr * 1e+09
-              collapsed_fwd_prob[[l]]$nr_r <- collapsed_fwd_prob[[l]]$nr_r * 1e+09
-              collapsed_fwd_prob[[l]]$r_nr <- collapsed_fwd_prob[[l]]$r_nr * 1e+09
-              collapsed_fwd_prob[[l]]$r_r <- collapsed_fwd_prob[[l]]$r_r * 1e+09
-              collapsed_fwd_prob[[l]]$total <- collapsed_fwd_prob[[l]]$total * 1e+09
+            if (min(collapsed_fwd_prob[[l]]$total) < 1e-15) {
+              collapsed_fwd_prob[[l]]$nr_nr <- collapsed_fwd_prob[[l]]$nr_nr * 1e+15
+              collapsed_fwd_prob[[l]]$nr_r <- collapsed_fwd_prob[[l]]$nr_r * 1e+15
+              collapsed_fwd_prob[[l]]$r_nr <- collapsed_fwd_prob[[l]]$r_nr * 1e+15
+              collapsed_fwd_prob[[l]]$r_r <- collapsed_fwd_prob[[l]]$r_r * 1e+15
+              collapsed_fwd_prob[[l]]$total <- collapsed_fwd_prob[[l]]$total * 1e+15
+            }
+            if (max(collapsed_fwd_prob[[l]]$total) > 1e+15) {
+              collapsed_fwd_prob[[l]]$nr_nr <- collapsed_fwd_prob[[l]]$nr_nr * 1e-15
+              collapsed_fwd_prob[[l]]$nr_r <- collapsed_fwd_prob[[l]]$nr_r * 1e-15
+              collapsed_fwd_prob[[l]]$r_nr <- collapsed_fwd_prob[[l]]$r_nr * 1e-15
+              collapsed_fwd_prob[[l]]$r_r <- collapsed_fwd_prob[[l]]$r_r * 1e-15
+              collapsed_fwd_prob[[l]]$total <- collapsed_fwd_prob[[l]]$total * 1e-15
             }
           }
         }
@@ -1833,11 +1889,11 @@ performBWPS_Approx3 <- function(obs_individual, ref_panel, theta, lambda, block_
       # calculate the full-collapsed forward probabilities at the first site of the genomic block
       collapsed_fwd_prob[[1]] <- list(total = collapseFwdProb_Diplo_FullRed_Block_Approx3(uncollapsed_fwd_prob_lbndry, collapsed_info))
       
-      if (min(collapsed_fwd_prob[[1]]$total) < 1e-09) {
-        collapsed_fwd_prob[[1]]$total <- collapsed_fwd_prob[[1]]$total * 1e+09
+      if (min(collapsed_fwd_prob[[1]]$total) < 1e-15) {
+        collapsed_fwd_prob[[1]]$total <- collapsed_fwd_prob[[1]]$total * 1e+15
       }
-      if (max(collapsed_fwd_prob[[1]]$total) > 1e+09) {
-        collapsed_fwd_prob[[1]]$total <- collapsed_fwd_prob[[1]]$total * 1e-09
+      if (max(collapsed_fwd_prob[[1]]$total) > 1e+15) {
+        collapsed_fwd_prob[[1]]$total <- collapsed_fwd_prob[[1]]$total * 1e-15
       }
       
       if (L_block > 1) {
@@ -1845,19 +1901,19 @@ performBWPS_Approx3 <- function(obs_individual, ref_panel, theta, lambda, block_
         collapsed_emn_prob <- calculateEmnProb_Diplo(obs_block[2], collapsed_ref_block[, 2], collapsed_ref_block[, 2], emn_prob_tab)
         collapsed_fwd_prob[[2]] <- initialiseFwdProb_Diplo_FullRed_Block(collapsed_fwd_prob[[1]]$total, collapsed_emn_prob, theta_block[1], N_panel, N_block)
         
-        if (min(collapsed_fwd_prob[[2]]$nr_nr) < 1e-09) {
-          collapsed_fwd_prob[[2]]$nr_nr <- collapsed_fwd_prob[[2]]$nr_nr * 1e+09
-          collapsed_fwd_prob[[2]]$nr_r <- collapsed_fwd_prob[[2]]$nr_r * 1e+09
-          collapsed_fwd_prob[[2]]$r_nr <- collapsed_fwd_prob[[2]]$r_nr * 1e+09
-          collapsed_fwd_prob[[2]]$r_r <- collapsed_fwd_prob[[2]]$r_r * 1e+09
-          collapsed_fwd_prob[[2]]$total <- collapsed_fwd_prob[[2]]$total * 1e+09
+        if (min(collapsed_fwd_prob[[2]]$total) < 1e-15) {
+          collapsed_fwd_prob[[2]]$nr_nr <- collapsed_fwd_prob[[2]]$nr_nr * 1e+15
+          collapsed_fwd_prob[[2]]$nr_r <- collapsed_fwd_prob[[2]]$nr_r * 1e+15
+          collapsed_fwd_prob[[2]]$r_nr <- collapsed_fwd_prob[[2]]$r_nr * 1e+15
+          collapsed_fwd_prob[[2]]$r_r <- collapsed_fwd_prob[[2]]$r_r * 1e+15
+          collapsed_fwd_prob[[2]]$total <- collapsed_fwd_prob[[2]]$total * 1e+15
         }
-        if (max(collapsed_fwd_prob[[2]]$nr_nr) > 1e+09) {
-          collapsed_fwd_prob[[2]]$nr_nr <- collapsed_fwd_prob[[2]]$nr_nr * 1e-09
-          collapsed_fwd_prob[[2]]$nr_r <- collapsed_fwd_prob[[2]]$nr_r * 1e-09
-          collapsed_fwd_prob[[2]]$r_nr <- collapsed_fwd_prob[[2]]$r_nr * 1e-09
-          collapsed_fwd_prob[[2]]$r_r <- collapsed_fwd_prob[[2]]$r_r * 1e-09
-          collapsed_fwd_prob[[2]]$total <- collapsed_fwd_prob[[2]]$total * 1e-09
+        if (max(collapsed_fwd_prob[[2]]$total) > 1e+15) {
+          collapsed_fwd_prob[[2]]$nr_nr <- collapsed_fwd_prob[[2]]$nr_nr * 1e-15
+          collapsed_fwd_prob[[2]]$nr_r <- collapsed_fwd_prob[[2]]$nr_r * 1e-15
+          collapsed_fwd_prob[[2]]$r_nr <- collapsed_fwd_prob[[2]]$r_nr * 1e-15
+          collapsed_fwd_prob[[2]]$r_r <- collapsed_fwd_prob[[2]]$r_r * 1e-15
+          collapsed_fwd_prob[[2]]$total <- collapsed_fwd_prob[[2]]$total * 1e-15
         }
         
         if (L_block > 2) {
@@ -1866,19 +1922,19 @@ performBWPS_Approx3 <- function(obs_individual, ref_panel, theta, lambda, block_
             collapsed_emn_prob <- calculateEmnProb_Diplo(obs_block[l], collapsed_ref_block[, l], collapsed_ref_block[, l], emn_prob_tab)
             collapsed_fwd_prob[[l]] <- updateFwdProb_Diplo_FullRed_Block(collapsed_fwd_prob[[l - 1]], collapsed_emn_prob, theta_block[l - 1], N_panel, N_block)
             
-            if (max(collapsed_fwd_prob[[l]]$nr_nr) < 1e-09) {
-              collapsed_fwd_prob[[l]]$nr_nr <- collapsed_fwd_prob[[l]]$nr_nr * 1e+09
-              collapsed_fwd_prob[[l]]$nr_r <- collapsed_fwd_prob[[l]]$nr_r * 1e+09
-              collapsed_fwd_prob[[l]]$r_nr <- collapsed_fwd_prob[[l]]$r_nr * 1e+09
-              collapsed_fwd_prob[[l]]$r_r <- collapsed_fwd_prob[[l]]$r_r * 1e+09
-              collapsed_fwd_prob[[l]]$total <- collapsed_fwd_prob[[l]]$total * 1e+09
+            if (min(collapsed_fwd_prob[[l]]$total) < 1e-15) {
+              collapsed_fwd_prob[[l]]$nr_nr <- collapsed_fwd_prob[[l]]$nr_nr * 1e+15
+              collapsed_fwd_prob[[l]]$nr_r <- collapsed_fwd_prob[[l]]$nr_r * 1e+15
+              collapsed_fwd_prob[[l]]$r_nr <- collapsed_fwd_prob[[l]]$r_nr * 1e+15
+              collapsed_fwd_prob[[l]]$r_r <- collapsed_fwd_prob[[l]]$r_r * 1e+15
+              collapsed_fwd_prob[[l]]$total <- collapsed_fwd_prob[[l]]$total * 1e+15
             }
-            if (max(collapsed_fwd_prob[[l]]$nr_nr) > 1e+09) {
-              collapsed_fwd_prob[[l]]$nr_nr <- collapsed_fwd_prob[[l]]$nr_nr * 1e-09
-              collapsed_fwd_prob[[l]]$nr_r <- collapsed_fwd_prob[[l]]$nr_r * 1e-09
-              collapsed_fwd_prob[[l]]$r_nr <- collapsed_fwd_prob[[l]]$r_nr * 1e-09
-              collapsed_fwd_prob[[l]]$r_r <- collapsed_fwd_prob[[l]]$r_r * 1e-09
-              collapsed_fwd_prob[[l]]$total <- collapsed_fwd_prob[[l]]$total * 1e-09
+            if (max(collapsed_fwd_prob[[l]]$total) > 1e+15) {
+              collapsed_fwd_prob[[l]]$nr_nr <- collapsed_fwd_prob[[l]]$nr_nr * 1e-15
+              collapsed_fwd_prob[[l]]$nr_r <- collapsed_fwd_prob[[l]]$nr_r * 1e-15
+              collapsed_fwd_prob[[l]]$r_nr <- collapsed_fwd_prob[[l]]$r_nr * 1e-15
+              collapsed_fwd_prob[[l]]$r_r <- collapsed_fwd_prob[[l]]$r_r * 1e-15
+              collapsed_fwd_prob[[l]]$total <- collapsed_fwd_prob[[l]]$total * 1e-15
             }
           }
         }
