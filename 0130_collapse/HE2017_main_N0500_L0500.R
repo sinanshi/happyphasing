@@ -16,7 +16,7 @@ nrun <- as.integer(args[1])
 N_pnl <- 1000
 L_pnl <- 500
 
-N_smp <- 20
+N_smp <- 50
 L_smp <- 500
 
 obs_dip <- array(NA, dim = c(N_smp, 2, L_smp))
