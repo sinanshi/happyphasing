@@ -28,10 +28,10 @@ std <- data.table(std, ref=splt[1, ], minor=splt[2, ])
 strand <- std[,c("V3", "ref", "minor")]
 names(strand) <- c("position", "a0", "a1")
 
-#aa = data.table(strand$a0, strand$a1)
-#aa1 <- apply(aa, 1, sort)
-#aa = data.table(leg$a0, leg$a1)
-#aa2 <- apply(aa, 1, sort)
+aa = data.table(strand$a0, strand$a1)
+aa1 <- apply(aa, 1, sort)
+aa = data.table(leg$a0, leg$a1)
+aa2 <- apply(aa, 1, sort)
 
 
 strand$a0 <- aa1[1, ]
@@ -44,5 +44,3 @@ index <- leg$position %in% m$position & !duplicated(leg$position)
 
 h_sub <- h[index, ]
 row.names(h_sub) <- leg$position[index]
-
-

@@ -33,37 +33,37 @@ print(theta)
 print(lambda)
 #' Perform the forward procedure using the haplotype reference panel with state-space reduction
 if (nrun == 1) {
-  dip_N02000_L0750 <- array(NA, dim = c(10, 2, L_pnl))
-  for (k in 1:10) {
-    obs_individual <- colSums(obs_smp_N02000_L0750[(2 * k - 1):(2 * k), ])
-  print(obs_individual)
-    dip_N02000_L0750[k, , ] <- performBWPS(obs_individual, ref_pnl_N02000_L0750, theta, lambda, block_length, M_sample)
-  }
-  save(dip_N02000_L0750, file = "dip_N02000_L0750_Approx0_set1.RData")
+    dip_N02000_L0750 <- array(NA, dim = c(10, 2, L_pnl))
+    for (k in 1:10) {
+        obs_individual <- colSums(obs_smp_N02000_L0750[(2 * k - 1):(2 * k), ])
+        print(obs_individual)
+        dip_N02000_L0750[k, , ] <- performBWPS(obs_individual, ref_pnl_N02000_L0750, theta, lambda, block_length, M_sample)
+    }
+    save(dip_N02000_L0750, file = "dip_N02000_L0750_Approx0_set1.RData")
 } 
 if (nrun == 2) {
-  dip_N02000_L0750 <- array(NA, dim = c(10, 2, L_pnl))
-  for (k in 1:10) {
-    obs_individual <- colSums(obs_smp_N02000_L0750[(2 * k - 1):(2 * k), ])
-    dip_N02000_L0750[k, , ] <- performBWPS_Approx1(obs_individual, ref_pnl_N02000_L0750, theta, lambda, block_length, M_sample)
-  }
-  save(dip_N02000_L0750, file = "dip_N02000_L0750_Approx1_set1.RData")
+    dip_N02000_L0750 <- array(NA, dim = c(10, 2, L_pnl))
+    for (k in 1:10) {
+        obs_individual <- colSums(obs_smp_N02000_L0750[(2 * k - 1):(2 * k), ])
+        dip_N02000_L0750[k, , ] <- performBWPS_Approx1(obs_individual, ref_pnl_N02000_L0750, theta, lambda, block_length, M_sample)
+    }
+    save(dip_N02000_L0750, file = "dip_N02000_L0750_Approx1_set1.RData")
 } 
 if (nrun == 3) {
-  dip_N02000_L0750 <- array(NA, dim = c(10, 2, L_pnl))
-  for (k in 1:10) {
-    obs_individual <- colSums(obs_smp_N02000_L0750[(2 * k - 1):(2 * k), ])
-    dip_N02000_L0750[k, , ] <- performBWPS_Approx2(obs_individual, ref_pnl_N02000_L0750, theta, lambda, block_length, M_sample)
-  }
-  save(dip_N02000_L0750, file = "dip_N02000_L0750_Approx2_set1.RData")
+    dip_N02000_L0750 <- array(NA, dim = c(10, 2, L_pnl))
+    for (k in 1:10) {
+        obs_individual <- colSums(obs_smp_N02000_L0750[(2 * k - 1):(2 * k), ])
+        dip_N02000_L0750[k, , ] <- performBWPS_Approx2(obs_individual, ref_pnl_N02000_L0750, theta, lambda, block_length, M_sample)
+    }
+    save(dip_N02000_L0750, file = "dip_N02000_L0750_Approx2_set1.RData")
 } 
 if (nrun == 4) { 
-  dip_N02000_L0750 <- array(NA, dim = c(10, 2, L_pnl))
-  for (k in 1:10) {
-    obs_individual <- colSums(obs_smp_N02000_L0750[(2 * k - 1):(2 * k), ])
-    dip_N02000_L0750[k, , ] <- performBWPS_Approx3(obs_individual, ref_pnl_N02000_L0750, theta, lambda, block_length, M_sample)
-  }
-  save(dip_N02000_L0750, file = "dip_N02000_L0750_Approx3_set1.RData")
+    dip_N02000_L0750 <- array(NA, dim = c(10, 2, L_pnl))
+    for (k in 1:10) {
+        obs_individual <- colSums(obs_smp_N02000_L0750[(2 * k - 1):(2 * k), ])
+        dip_N02000_L0750[k, , ] <- performBWPS_Approx3(obs_individual, ref_pnl_N02000_L0750, theta, lambda, block_length, M_sample)
+    }
+    save(dip_N02000_L0750, file = "dip_N02000_L0750_Approx3_set1.RData")
 }
 
 
@@ -84,35 +84,35 @@ M_sample <- 1
 
 #' Perform the forward procedure using the haplotype reference panel with state-space reduction
 if (nrun == 5) {
-  dip_N02000_L0750 <- array(NA, dim = c(10, 2, L_pnl))
-  for (k in 1:10) {
-    obs_individual <- colSums(obs_smp_N02000_L0750[(2 * k - 1):(2 * k), ])
-    dip_N02000_L0750[k, , ] <- performBWPS(obs_individual, ref_pnl_N02000_L0750, theta, lambda, block_length, M_sample)
-  }
-  save(dip_N02000_L0750, file = "dip_N02000_L0750_Approx0_set2.RData")
+    dip_N02000_L0750 <- array(NA, dim = c(10, 2, L_pnl))
+    for (k in 1:10) {
+        obs_individual <- colSums(obs_smp_N02000_L0750[(2 * k - 1):(2 * k), ])
+        dip_N02000_L0750[k, , ] <- performBWPS(obs_individual, ref_pnl_N02000_L0750, theta, lambda, block_length, M_sample)
+    }
+    save(dip_N02000_L0750, file = "dip_N02000_L0750_Approx0_set2.RData")
 } 
 if (nrun == 6) {
-  dip_N02000_L0750 <- array(NA, dim = c(10, 2, L_pnl))
-  for (k in 1:10) {
-    obs_individual <- colSums(obs_smp_N02000_L0750[(2 * k - 1):(2 * k), ])
-    dip_N02000_L0750[k, , ] <- performBWPS_Approx1(obs_individual, ref_pnl_N02000_L0750, theta, lambda, block_length, M_sample)
-  }
-  save(dip_N02000_L0750, file = "dip_N02000_L0750_Approx1_set2.RData")
+    dip_N02000_L0750 <- array(NA, dim = c(10, 2, L_pnl))
+    for (k in 1:10) {
+        obs_individual <- colSums(obs_smp_N02000_L0750[(2 * k - 1):(2 * k), ])
+        dip_N02000_L0750[k, , ] <- performBWPS_Approx1(obs_individual, ref_pnl_N02000_L0750, theta, lambda, block_length, M_sample)
+    }
+    save(dip_N02000_L0750, file = "dip_N02000_L0750_Approx1_set2.RData")
 } 
 if (nrun == 7) {
-  dip_N02000_L0750 <- array(NA, dim = c(10, 2, L_pnl))
-  for (k in 1:10) {
-    obs_individual <- colSums(obs_smp_N02000_L0750[(2 * k - 1):(2 * k), ])
-    dip_N02000_L0750[k, , ] <- performBWPS_Approx2(obs_individual, ref_pnl_N02000_L0750, theta, lambda, block_length, M_sample)
-  }
-  save(dip_N02000_L0750, file = "dip_N02000_L0750_Approx2_set2.RData")
+    dip_N02000_L0750 <- array(NA, dim = c(10, 2, L_pnl))
+    for (k in 1:10) {
+        obs_individual <- colSums(obs_smp_N02000_L0750[(2 * k - 1):(2 * k), ])
+        dip_N02000_L0750[k, , ] <- performBWPS_Approx2(obs_individual, ref_pnl_N02000_L0750, theta, lambda, block_length, M_sample)
+    }
+    save(dip_N02000_L0750, file = "dip_N02000_L0750_Approx2_set2.RData")
 } 
 if (nrun == 8) { 
-  dip_N02000_L0750 <- array(NA, dim = c(10, 2, L_pnl))
-  for (k in 1:10) {
-    obs_individual <- colSums(obs_smp_N02000_L0750[(2 * k - 1):(2 * k), ])
-    dip_N02000_L0750[k, , ] <- performBWPS_Approx3(obs_individual, ref_pnl_N02000_L0750, theta, lambda, block_length, M_sample)
-  }
-  save(dip_N02000_L0750, file = "dip_N02000_L0750_Approx3_set2.RData")
+    dip_N02000_L0750 <- array(NA, dim = c(10, 2, L_pnl))
+    for (k in 1:10) {
+        obs_individual <- colSums(obs_smp_N02000_L0750[(2 * k - 1):(2 * k), ])
+        dip_N02000_L0750[k, , ] <- performBWPS_Approx3(obs_individual, ref_pnl_N02000_L0750, theta, lambda, block_length, M_sample)
+    }
+    save(dip_N02000_L0750, file = "dip_N02000_L0750_Approx3_set2.RData")
 }
 
