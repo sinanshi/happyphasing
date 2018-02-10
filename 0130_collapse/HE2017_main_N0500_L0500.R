@@ -7,7 +7,8 @@ library("plyr")
 
 source("HE2017_rfun_N0500_L0500.R")
 
-load("h_chips.RData")
+#load("h_chips.RData")
+load("h_64940.RData")
 ref_pnl <- t(h)
 
 args = commandArgs(trailingOnly = TRUE)

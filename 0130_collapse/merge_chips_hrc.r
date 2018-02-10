@@ -8,6 +8,11 @@ if (!exists("std_"))
 
 if (!exists("leg"))
     leg <- fread("legend")
+sample <- fread("HRC.r1-1.GRCh37.chr20.shapeit3.mac5.aa.genotypes.samples")
+s <- sample$sample
+data.table(s1=s, s2=s)
+s=as.vector(unlist(t(data.table(s1=s, s2=s))))
+
 
 std <- std_[V2 == 20]
 
@@ -43,4 +48,11 @@ m <- merge(strand, leg, by=c("position", "a0", "a1"))
 index <- leg$position %in% m$position & !duplicated(leg$position)
 
 h_sub <- h[index, ]
+h_sub <- as.matrix(h_sub)
 row.names(h_sub) <- leg$position[index]
+names(h_sub) <- s
+
+#save
+h_hrc <- h # still keep a copy just in case, as it takes too long to load the full HRC panel.
+save(file="hrc_subset.RData", h)
+
